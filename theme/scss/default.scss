@@ -11,8 +11,8 @@ $gray-3: #797979;
 $gray-4: #F15E45;
 
 $brand-blue: #F15E45; // rgb(67, 135, 253);
-$brand-blue-secondary: #3c8ef3;
-$brand-blue-secondary2: #2a7cdf;
+$brand-blue-secondary: lighten($brand-blue, 5%);
+$brand-blue-secondary2: lighten($brand-blue, 10%);
 
 $brand-red: rgb(244, 74, 63);
 $brand-red-secondary: #e0543e;
@@ -162,6 +162,10 @@ slides > slide {
 
   &.dark {
     background: $gray-4 !important;
+
+    h1, h2, h3, h4, h5, h6 {
+      color: white;
+    }
   }
 
   &:not(.nobackground) {
@@ -512,11 +516,6 @@ table {
   border-spacing: 2px;
   border-bottom: 1px solid $gray-3;
 
-  tr > td:first-child, th {
-    font-weight: 600;
-    color: $gray-4;
-  }
-
   tr:nth-child(odd) {
     background-color: $gray-1;
   }
@@ -857,6 +856,22 @@ article.smaller {
     position: absolute;
     bottom: 225px;
   }
+
+  &.centered {
+
+    hgroup {
+      width: 860px;
+      bottom: 260px;
+      text-align: center;
+    }
+
+  }
+}
+
+
+.title-slide aside.gdbar,
+.thank-you-slide aside.gdbar {
+  @include transition(all 0.5s ease-out 0.5s); /* Better to transition only on background-size, but not sure how to do that with the mixin. */
 }
 
 .thank-you-slide {
@@ -890,7 +905,6 @@ aside.gdbar {
   @include border-radius(0 10px 10px 0);
   @include background(linear-gradient(left, $gray-1, $gray-1) no-repeat);
   @include background-size(0% 100%);
-  @include transition(all 0.5s ease-out 0.5s); /* Better to transition only on background-size, but not sure how to do that with the mixin. */
 
   &.right {
     right: 0;
@@ -975,7 +989,7 @@ aside.gdbar {
       display: none !important;
     }
   }
-  
+
   slides {
     slide {
       &.backdrop {
