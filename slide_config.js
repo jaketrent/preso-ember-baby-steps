@@ -1,8 +1,8 @@
 var SLIDE_CONFIG = {
   // Slide settings
   settings: {
-    title: 'Going Places with Ember.js',
-    subtitle: '',
+    title: 'Baby Steps',
+    subtitle: 'Going Places with Ember.js',
     //eventTitle: 'Ember Meetup - Jan 2014',
     useBuilds: true, // Default: true. False will turn off slide animation builds.
     usePrettify: true, // Default: true

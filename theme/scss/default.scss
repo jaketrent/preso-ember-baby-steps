@@ -562,6 +562,11 @@ slide.fill {
   background-repeat: no-repeat;
   @include border-radius($slide-border-radius);
   @include background-size(cover);
+  color: #fff;
+
+  h3 {
+    color: #fff;
+  }
 }
 
 /* Size variants */
@@ -845,16 +850,23 @@ article.smaller {
   padding: $slide-left-right-padding $slide-left-right-padding * 2;
 
   h2 {
-    color: white; // $gray-1;
     font-size: 60px;
   }
   h3 {
-    color: white; // $gray-1;
     line-height: 2.8;
   }
   hgroup {
     position: absolute;
     bottom: 225px;
+  }
+
+  &.dark {
+    h2 {
+      color: white; // $gray-1;
+    }
+    h3 {
+      color: white; // $gray-1;
+    }
   }
 
   &.centered {

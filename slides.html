@@ -44,84 +44,53 @@ URL: https://code.google.com/p/io-2012-slides
 </slide>
 
 
-<slide class="segue dark nobackground centered" >
+<slide class="fill nobackground" >
   
-    <aside class="gdbar"><img src="images/ember_icon_128.png"></aside>
-    <hgroup class="auto-fadein">
-      <h2>Framework</h2>
-      <h3>provides a pattern</h3>
+    <hgroup>
+      <h2>Agenda</h2>
+      <h3></h3>
     </hgroup>
-  
+    <article ><p><br /><br /><br /><br /><br /></p>
+<ul>
+<li>Out the door
+  <br /> (Ember Objects)</li>
+<li>Going sailing
+  <br />(Ember Object Internal APIs)</li>
+<li>Finding friends
+  <br />(APIs to Interface with Other Ember Objects)</li>
+</ul>
+<p><img alt="Shirt" src="images/bob/psych.jpg" /></p></article>
+ 
 </slide>
 
-<slide class="segue dark nobackground centered" >
+<slide class="fill nobackground" >
   
-    <aside class="gdbar"><img src="images/ember_icon_128.png"></aside>
-    <hgroup class="auto-fadein">
-      <h2>Opinionated</h2>
-      <h3>strictest I've used</h3>
+    <hgroup>
+      <h2>Getting Out the Door</h2>
+      <h3>The Ember Objects</h3>
     </hgroup>
-  
+    <article ><p><img alt="Germophobia" src="images/bob/tissue.png" /></p></article>
+ 
 </slide>
 
-<slide class="segue dark nobackground centered" >
-  
-    <aside class="gdbar"><img src="images/ember_icon_128.png"></aside>
-    <hgroup class="auto-fadein">
-      <h2>ember && ember-data</h2>
-      <h3>provides the most</h3>
-    </hgroup>
-  
-</slide>
-
-<slide class="segue dark nobackground centered" >
-  
-    <aside class="gdbar"><img src="images/ember_icon_128.png"></aside>
-    <hgroup class="auto-fadein">
-      <h2>Just Another</h2>
-      <h3>MVC</h3>
-    </hgroup>
-  
-</slide>
-
-<slide class="segue dark nobackground centered" >
-  
-    <aside class="gdbar"><img src="images/ember_icon_128.png"></aside>
-    <hgroup class="auto-fadein">
-      <h2>It's Cool</h2>
-      <h3>Learn another one</h3>
-    </hgroup>
-  
-</slide>
-
-<slide class="segue dark nobackground centered" >
-  
-    <aside class="gdbar"><img src="images/ember_icon_128.png"></aside>
-    <hgroup class="auto-fadein">
-      <h2>Next Week</h2>
-      <h3>Learn another one</h3>
-    </hgroup>
-  
-</slide>
-
-<slide class="segue dark nobackground centered" >
+<slide class="segue centered" >
   
     <aside class="gdbar"><img src="images/ember_icon_128.png"></aside>
     <hgroup class="auto-fadein">
       <h2>The Ember Way</h2>
-      <h3>Model, View, Controller</h3>
+      <h3>MVC via Route, Model, Controller, View, Component</h3>
     </hgroup>
   
 </slide>
 
-<slide class="segue dark nobackground centered" >
+<slide  >
   
-    <aside class="gdbar"><img src="images/ember_icon_128.png"></aside>
-    <hgroup class="auto-fadein">
-      <h2>The Ember Way</h2>
-      <h3>Route, Model, Controller, View, Component</h3>
+    <hgroup>
+      <h2>Ember Objects</h2>
+      <h3></h3>
     </hgroup>
-  
+    <article ><p><img alt="Ember objects" src="images/bob/emberobjects.png" /></p></article>
+ 
 </slide>
 
 <slide  >
@@ -216,15 +185,14 @@ URL: https://code.google.com/p/io-2012-slides
   <tr>
     <td>
       <ul>
+        <li>HTML tags only</li>
         <li>Shared state w/ controller</li>
-        <li>HTML tag only</li>
-        <li>Bound to internal Ember controller for extra functionality</li>
       </ul>
     </td>
     <td>
       <ul>
-        <li>Doesn't share state w/ anything</li>
         <li>Custom tags</li>
+        <li>Doesn't share state w/ anything</li>
         <li>Define your own controller w/in Component definition</li>
       </ul>
     </td>
@@ -233,13 +201,373 @@ URL: https://code.google.com/p/io-2012-slides
  
 </slide>
 
+<slide class="nobackground fill" >
+  
+    <hgroup>
+      <h2>I'm Sailing</h2>
+      <h3>Ember Object Internal APIs</h3>
+    </hgroup>
+    <article ><p><img alt="Sailing" src="images/bob/sailing.jpg" /></p></article>
+ 
+</slide>
+
 <slide  >
   
     <hgroup>
-      <h2></h2>
+      <h2>Route</h2>
       <h3></h3>
     </hgroup>
-    <article ></article>
+    <article ><h3>Map route to URL</h3>
+<pre class="prettyprint" data-lang="coffee">
+App = Ember.App.create()
+
+App.Router.map ->
+  @resource 'supplies', ->
+    @resource 'supply', { path: ':id'}
+</pre>
+
+<h3>Fetch data (w/ ember-data)</h3>
+<pre class="prettyprint" data-lang="coffee">
+App.ApplicationAdapter = DS.FixtureAdapter.extend()
+
+App.SuppliesRoute = Ember.Route.extend
+  model: ->
+    @store.find 'supply'
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Route (2)</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Change rendering options</h3>
+<pre class="prettyprint" data-lang="coffee">
+App.SuppliesRoute.reopen
+  renderTemplate: ->
+    @render 'diffTemplateName',
+      outlet: 'aNamedOutlet'
+      controller: getArbitraryController()
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Model</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Define attributes</h3>
+<pre class="prettyprint" data-lang="coffee">
+App.Supply = DS.Model.extend
+  description: DS.attr 'string'
+
+  lose: -> # ...
+  share: -> # ...
+  wrapInTissue:- > # ...
+</pre>
+
+<h3>Define fixture data</h3>
+<pre class="prettyprint" data-lang="coffee">
+App.Supply.FIXTURES = [
+  { id: 1, description: 'Gill' }
+  { id: 2, description: 'T-Shirt' }
+  { id: 3, description: 'Tissues' }
+]
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Controller</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Add UI-only properties</h3>
+<pre class="prettyprint" data-lang="coffee">
+App.SupplyController = Ember.ObjectController.extend
+  isWrappedInTissue: false
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Template</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Display data</h3>
+<pre class="prettyprint" data-lang="vacation-supplies.emblem">
+ul
+  each itemController="supply"
+    li #{description} (#{isWrappedInTissue})
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>View</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Abstract parts of the display, sharing state</h3>
+<pre class="prettyprint" data-lang="coffee">
+App.SupplyController = Ember.ObjectController.extend
+  isWrappedInTissue: false
+
+App.TissueWrappableView = Ember.View.extend
+  templateName: 'germophobe'
+</pre>
+
+<pre class="prettyprint" data-lang="vacation-supplies.emblem">
+each itemController="supply"
+  App.TissueWrappableView
+</pre>
+
+<pre class="prettyprint" data-lang="germophobe.emblem">
+li #{description} (#{isWrappedInTissue})
+</pre>
+
+<p hidden>http://emberjs.jsbin.com/zotewedi/2/edit</p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Component</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Abstract parts of the display, isolating state</h3>
+<pre class="prettyprint" data-lang="coffee">
+App.TissueWrappableComponent = Ember.Component.extend
+  tagName: 'li'
+  wrapped: false
+</pre>
+
+<pre class="prettyprint" data-lang="vacation-supplies.emblem">
+each itemController="supply"
+  tissue-wrappable wrapped=isWrappedInTissue
+</pre>
+
+<pre class="prettyprint" data-lang="components/tissue-wrappable.emblem">
+#{description} (#{wrapped})
+</pre>
+
+<p hidden>http://emberjs.jsbin.com/loboyecu/1/edit</p></article>
+ 
+</slide>
+
+<slide class="fill nobackground" >
+  
+    <hgroup>
+      <h2>Finding Friends</h2>
+      <h3>APIs to Interface with Other Ember Objects</h3>
+    </hgroup>
+    <article ><p><img alt="Friends" src="images/bob/talking.jpg" /></p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Ember Objects</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><img alt="Ember objects" src="images/bob/emberobjects.png" /></p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Route -> Controller</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Access a different controller</h3>
+<pre class="prettyprint" data-lang="coffee">
+  App.SupplyRoute = Ember.Route.extend
+    setupController: (controller, supply) ->
+      @_super controller, supply
+      @controllerFor('supplies').set 'currentSupply', supply
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Controller -> Controller</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Get to parent controller from item controller</h3>
+<pre class="prettyprint" data-lang="coffee">
+App.SuppliesController = Ember.ArrayController.extend
+  suppliesCategory: "For germophobes"
+
+App.SupplyController = Ember.ObjectController.extend()
+</pre>
+
+<pre class="prettyprint" data-lang="emblem">
+ul
+  each itemController="supply"
+    li #{description} (cat: {{parentController.suppliesCategory}}
+</pre>
+
+<p hidden>http://emberjs.jsbin.com/xuyalolu/2/edit</p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Controller -> Controller (2)</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Make dependencies from one controller to another</h3>
+<p><pre class="prettyprint" data-lang="coffee">
+App.SuppliesController = Ember.ArrayController.extend
+  numSupplies: -&gt; # ...</p>
+<p>App.SupplyController = Ember.ObjectController.extend
+  needs: ['supplies']
+</pre></p>
+<pre class="prettyprint" data-lang="supply.emblem">
+{{controllers.supplies.numSupplies}}
+</pre>
+
+<p hidden>http://emberjs.jsbin.com/nuxiqaja/11/edit</p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>View -> View</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Reference parent view</h3>
+<p><pre class="prettyprint" data-lang="coffee">
+App.TissueWrappableView = Ember.View.extend
+  templateName: 'tissue-wrappable'
+  probablyContaminated: true</p>
+<p>App.InnerPeaceView = Ember.View.extend
+  templateName: 'inside-the-wrapper'
+</pre></p>
+<pre class="prettyprint" data-lang="tissue-wrappable.emblem">
+p Wrapping!
+App.InnerPeaceView
+</pre>
+
+<pre class="prettyprint" data-lang="inside-the-wrapper.emblem">
+p Inside!
+p= view.parentView.probablyContaminated
+</pre>
+
+<p hidden>http://emberjs.jsbin.com/belowimo/6/edit</p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>View -> Template</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><pre class="prettyprint" data-lang="coffee">
+App.IsHandShuckedView = Ember.View.extend
+  domDidChange: (->
+    $ears = @$ 'input[type=checkbox]'
+    # ...
+  ).on 'change'
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Component -> Controller</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><pre class="prettyprint" data-lang="coffee">
+App.BabyStepsController = Ember.ArrayController.extend
+  actions:
+    breathe: -> # ...
+    callElevator: -> # ...
+
+App.BabyStepComponent = Ember.Component.extend
+  actions:
+    take: ->
+      @sendAction 'step'
+</pre>
+
+<pre class="prettyprint" data-lang="baby-steps.emblem">
+baby-step step="breathe"
+</pre>
+
+<pre class="prettyprint" data-lang="components/baby-step.emblem">
+p Take it!
+button click='step'
+</pre>
+
+<p hidden>http://emberjs.jsbin.com/dobagike/1/edit</p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Misc -> Misc</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>Route -&gt; (Route's own) Controller
+<pre class="prettyprint">@get 'controller'</pre></p>
+<p>View -&gt; View
+<pre class="prettyprint">@get ‘childViews’ </pre></p>
+<p>Component -&gt; Template
+<pre class="prettyprint">@get('element')</pre></p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Misc -> Misc (2)</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>Template -&gt; Controller
+<pre class="prettyprint">controllers.neededController.property</pre></p>
+<p>Template -&gt; View
+<pre class="prettyprint">view.property</pre></p>
+<p>Template -&gt; Model
+<pre class="prettyprint">
+this
+property
+model.property
+</pre></p></article>
+ 
+</slide>
+
+<slide class="fill nobackground" >
+  
+    <hgroup>
+      <h2>Baby Steps?</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul class="build">
+<li>Use tissues, if needed, but start</li>
+<li>Lots of APIs - Look at code, look at docs</li>
+<li>Write some code.  It's fun!</li>
+<li>Don't feel like you're committing forever</li>
+<li>There are many adventures to come!</li>
+</ul>
+<p><img alt="baby steps" src="images/bob/car.jpg" /></p></article>
  
 </slide>
 
