@@ -1,4 +1,8 @@
-# EmberJS Meetup Slides
+# See Slides
+
+[on github.io](http://jaketrent.github.io/preso-ember-baby-steps/slides.html)
+
+# Instructions
 
 ## Configuring the slides
 
